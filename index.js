@@ -38,38 +38,38 @@ app.post('/register', async (req,res)=> {
 })
 
 
-app.post('/createpost', async (req,res)=> {
-    const {username,content}= req.body
-    db.query("insert into posts (username,post_content) values (?,?)",[username,content] , 
-    (err,result) => {   
-          console.log(err)
-    })
-} )
+// app.post('/createpost', async (req,res)=> {
+//     const {username,content}= req.body
+//     db.query("insert into posts (username,post_content) values (?,?)",[username,content] , 
+//     (err,result) => {   
+//           console.log(err)
+//     })
+// } )
 
-app.get('/allposts', async (req,res)=> {
+// app.get('/allposts', async (req,res)=> {
    
-    db.query(
-        "select * from posts order by post_id desc", (err,result) => {
-            if(err){
-                return console.log(err.message)
-            }
+//     db.query(
+//         "select * from posts order by post_id desc", (err,result) => {
+//             if(err){
+//                 return console.log(err.message)
+//             }
 
-            res.send(result)
-        }
-    )
-} )
+//             res.send(result)
+//         }
+//     )
+// } )
 
 app.get('/login', async (req,res)=>  {
 
     try{
-        const {email,password} = req.body
+        const {username,password} = req.body
 
-        if(!email || !password) {
+        if(!username || !password) {
             return res.status(400)
         }
 
         db.query(
-            "Select * from register where email=? ",email,
+            "Select * from register where username=? ",username,
             async (err, result) => {
                 if(!result.length || !(await bcrypt.compare(password,result[0].password)) ) {
                     console.log(result);
