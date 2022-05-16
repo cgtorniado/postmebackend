@@ -29,10 +29,9 @@ app.use(express.urlencoded({
 }))
 
 app.post('/register', async (req,res)=> {
-    const username = req.body.username
-    const password = req.body.password
+    const {username,password,firstName,lastName,email} = req.body
     const hashPassword = await bcrypt.hash(password,8)
-    db.query("insert into register (username,password) values (?,?)",[username,hashPassword] , 
+    db.query("insert into register (firstName,lastName,username,email,password) values (?,?)",[firstName,lastName,username,email,hashPassword] , 
     (err,result) => {   
           console.log(err)
     })
