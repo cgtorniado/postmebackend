@@ -108,6 +108,7 @@ app.get('/profile', async (req,res)=>  {
                                 console.log(err.message);
                         }
 
+                        console.log(result)
                         return res.status(200).json({message: "success", array:result})
                     }
                 )
