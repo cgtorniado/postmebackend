@@ -98,14 +98,14 @@ app.post('/login', async (req,res)=>  {
 }
 )
 
-app.get('/profile', (req,res)=>  {
+app.get('/profile', async (req,res)=>  {
 
     try{
         const {userid} = req.body
 
         db.query("select * from register where userid=?", userid, (err,result) => {
                         if(err){
-                                console.log(err.message);
+                            console.log(err.message);
                         }
 
                         console.log(result)
