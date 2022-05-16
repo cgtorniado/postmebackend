@@ -79,10 +79,12 @@ app.post('/login', async (req,res)=>  {
                 db.query(
                     "select * from register", (err,result) => {
                         if(err){
-                            return console.log(err.message).send({message: "nonefoundindb"})
+                        
+                                console.log(err.message);
+                               
                         }
 
-                        return res.status(200).send({message: "success", result:result})
+                        return res.status(200).json({message: "success", array:result})
                     }
                 )
             }
