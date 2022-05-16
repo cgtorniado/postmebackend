@@ -59,6 +59,43 @@ app.get('/allposts', async (req,res)=> {
     )
 } )
 
+app.get('/login', async (req,res)=>  {
+
+    try{
+        const {email,password} = req.body
+
+        if(!email || !password) {
+            return res.status(400)
+        }
+
+        db.query(
+            "Select * from register where email=? ",email,
+            async (err, result) => {
+                if(!result.length || !(await bcrypt.compare(password,result[0].password)) ) {
+                    console.log(result);
+                    return res.status(401) 
+                }
+
+                db.query(
+                    "select * from registeredusers", (err,result) => {
+                        if(err){
+                            return console.log(err.message)
+                        }
+
+                        return res.status(200)
+                    }
+                )
+            }
+        )
+    }
+
+    catch (error){
+        console.log(error.message)
+    }
+
+}
+)
+
 
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
