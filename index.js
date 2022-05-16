@@ -65,7 +65,7 @@ app.post('/login', async (req,res)=>  {
         const {username,password} = req.body
 
         if(!username || !password) {
-            return res.status(400).send({message: "pls check login"})
+            return res.status(400).json({message: "pls check login"})
         }
 
         db.query(
@@ -73,7 +73,7 @@ app.post('/login', async (req,res)=>  {
             async (err, result) => {
                 if(!result.length || !(await bcrypt.compare(password,result[0].password)) ) {
                     console.log(result);
-                    return res.status(401).send({message: "invalid"}) 
+                    return res.status(401).json({message: "invalid"}) 
                 }
 
                 db.query(
