@@ -98,7 +98,7 @@ app.post('/login', async (req,res)=>  {
 }
 )
 
-app.get('/profile', async (req,res)=>  {
+app.get('/profile', (req,res)=>  {
 
     try{
         const {userid} = req.body
