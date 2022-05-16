@@ -77,7 +77,7 @@ app.post('/login', async (req,res)=>  {
                 }
 
                 db.query(
-                    "select * from register", (err,result) => {
+                    "select * from register where username=?", (err,result) => {
                         if(err){
                         
                                 console.log(err.message);
