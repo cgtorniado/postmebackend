@@ -82,7 +82,7 @@ app.post('/login', async (req,res)=>  {
                             return console.log(err.message)
                         }
 
-                        return res.status(200).send({message: "success"})
+                        return res.status(200).send({message: "success", result:result})
                     }
                 )
             }
