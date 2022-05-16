@@ -98,6 +98,30 @@ app.post('/login', async (req,res)=>  {
 }
 )
 
+app.get('/profile', async (req,res)=>  {
+
+    try{
+        const {userid} = req.body
+
+        db.query("select * from register where userid=?", userid, (err,result) => {
+                        if(err){
+                                console.log(err.message);
+                        }
+
+                        return res.status(200).json({message: "success", array:result})
+                    }
+                )
+            }
+    
+    
+
+    catch (error){
+        console.log(error.message)
+    }
+
+}
+)
+
 
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
