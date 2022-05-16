@@ -59,7 +59,7 @@ app.post('/register', async (req,res)=> {
 //     )
 // } )
 
-app.get('/login', async (req,res)=>  {
+app.post('/login', async (req,res)=>  {
 
     try{
         const {username,password} = req.body
