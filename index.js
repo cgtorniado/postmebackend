@@ -77,7 +77,7 @@ app.get('/login', async (req,res)=>  {
                 }
 
                 db.query(
-                    "select * from registeredusers", (err,result) => {
+                    "select * from register", (err,result) => {
                         if(err){
                             return console.log(err.message)
                         }
