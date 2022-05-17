@@ -175,6 +175,20 @@ app.post('/profile', (req,res)=>  {
 )
 
 
+app.post('/newpost', async (req,res)=> {
+    const {userid,post} = req.body
+    db.query("insert into posts (userid content) values (?,?)",[userid,post] , 
+    (err,result) => {   
+        if(err){
+            console.log(err.message);
+        }
+
+        console.log(result)
+        return res.status(200).json({message: "success", array:result})
+    })
+})
+
+
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
     console.log("server started");
