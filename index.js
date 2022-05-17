@@ -53,7 +53,19 @@ app.post('/registeraddtl', (req,res) => {
                 return console.log(err.message)
             }
           
-            return res.status(200).json({result:result,message:"record has been updated"})
+            
+            db.query(
+                "select * from register where username = ?",[username] , 
+                (err,result)=> {
+                    if(err){
+                        return console.log(err.message)
+                    }
+                  
+                    
+                    return res.status(200).json({result:result,message:"record has been updated"})
+                       
+                }
+            )
                
         }
     )
