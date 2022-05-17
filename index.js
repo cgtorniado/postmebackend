@@ -71,7 +71,7 @@ app.post('/registeraddtl', (req,res) => {
     )
 })
 
-app.get('/search', (req,res) => {
+app.post('/search', (req,res) => {
     const {search} = req.body
    
     db.query(
