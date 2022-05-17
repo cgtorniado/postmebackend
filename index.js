@@ -175,7 +175,7 @@ app.post('/profile', (req,res)=>  {
 )
 
 
-app.post('/newpost', async (req,res)=> {
+app.post('/newpost',  (req,res)=> {
     const {userid,post} = req.body
     db.query("insert into posts (userid,wallid,content) values (?,?,?)",[userid,userid,post] , 
     (err,result) => {   
@@ -188,7 +188,7 @@ app.post('/newpost', async (req,res)=> {
     })
 })
 
-app.post('/newpostother', async (req,res)=> {
+app.post('/newpostother',  (req,res)=> {
     const {userid,wallid,post} = req.body
     db.query("insert into posts (userid,wallid,content) values (?,?,?)",[userid,wallid,post] , 
     (err,result) => {   
@@ -201,7 +201,7 @@ app.post('/newpostother', async (req,res)=> {
     })
 })
 
-app.post('/postfeed', async (req,res)=> {
+app.post('/postfeed',  (req,res)=> {
     const {userid} = req.body
     db.query(`select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
     posts.date_updated, register.firstName, register.lastName, register.username,
@@ -221,7 +221,7 @@ app.post('/postfeed', async (req,res)=> {
 })
 
 
-app.post('/friendrequest', async (req,res)=> {
+app.post('/friendrequest',  (req,res)=> {
     const {userid,otherid} = req.body
     db.query("insert into friend_requests (userid,requestorid) values (?,?)",[otherid,userid] , 
     (err,result) => {   
@@ -230,7 +230,7 @@ app.post('/friendrequest', async (req,res)=> {
     })
 })
 
-app.post('/friendrequestpage', async (req,res)=> {
+app.post('/friendrequestpage', (req,res)=> {
     const {userid} = req.body
     db.query(`select * from friend_requests
     inner join register on friend_requests.requestorid=register.userid 
