@@ -232,9 +232,11 @@ app.post('/friendrequest',  (req,res)=> {
 
 app.post('/friendrequestpage', (req,res)=> {
     const {userid} = req.body
-    db.query(`select * from friend_requests
-    inner join register on friend_requests.requestorid=register.userid 
-    where friend_requests.userid = ?`,[userid] , 
+    db.query(`select friend_requests.requestid, friend_requests.userid as requestee, friend_requests.requestorid, 
+    friend_requests.date_created, register.userid,
+    register.firstName, register.lastName,register.city from friend_requests 
+        inner join register on friend_requests.requestorid=register.userid 
+        where friend_requests.userid = ?`,[userid] , 
     (err,result) => {   
           console.log(err)
           return res.status(200).json({message: "success", array:result})
