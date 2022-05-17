@@ -61,12 +61,12 @@ app.post('/register', async (req,res)=> {
 })
 
 app.post('/registeraddtl', imageupload , (req,res)=> {
-    const {userid,birthday,city,filename} = req.body
+    const {userid,birthday,city} = req.body
     const image = req.files.image[0]
     const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
     console.log(imagepath)
 
-    db.query("update register set city=?, birthday=?, picname=?, picpath=? where userid=?",[city,birthday,filename,imagepath,userid] , 
+    db.query("update register set city=?, birthday=?, picpath=? where userid=?",[city,birthday,imagepath,userid] , 
     (err,result) => {   
           console.log(err)
     })
