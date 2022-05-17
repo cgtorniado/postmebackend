@@ -29,24 +29,6 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended:true    
 }))
-app.use("/public", express.static(
-    path.join(__dirname,"/public")
-))
-
-
-
-//multer
-const storage = multer.diskStorage({
-    destination:  (req,file,callback)=> {
-        callback(null,path.join(__dirname,"../public/images"))
-    },
-    filename:(req,file,callback)=> {
-        callback(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
-    }
-})
-
-const upload = multer({storage:storage})
-const imageupload = upload.fields([{name:"image"}])
 
 
 //ROUTES
@@ -60,16 +42,17 @@ app.post('/register', async (req,res)=> {
     })
 })
 
-app.post('/registeraddtl', imageupload , (req,res)=> {
+app.post('/registeraddtl', (req,res)=> {
     const {userid,birthday,city} = req.body
-    const image = req.files.image[0]
-    const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
-    console.log(imagepath)
-
-    db.query("update register set city=?, birthday=?, picpath=? where userid=?",[city,birthday,imagepath,userid] , 
-    (err,result) => {   
+   
+    db.query("update register set city=?, birthday=? where userid=?",[city,birthday,userid] , 
+    (err) => {   
           console.log(err)
     })
+
+    return res.status(200).json({message: "success", array:result})
+
+
 })
 
 
