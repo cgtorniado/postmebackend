@@ -75,7 +75,7 @@ app.get('/search', (req,res) => {
     const {search} = req.body
    
     db.query(
-        "select * from register where first_name = ? or last_name =? ",[search,search], 
+        "select * from register where first_name = ? ",[search], 
         (err,result)=> {
             if(err){
                 return console.log(err.message)
