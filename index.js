@@ -71,6 +71,22 @@ app.post('/registeraddtl', (req,res) => {
     )
 })
 
+app.get('/search', (req,res) => {
+    const {search} = req.body
+   
+    db.query(
+        "select * from register where username like ?",[search] , 
+        (err,result)=> {
+            if(err){
+                return console.log(err.message)
+            }
+              
+             return res.status(200).json({result:result,message:"record has been updated"})
+                             
+        }
+    )
+})
+
 
 
 // app.post('/createpost', async (req,res)=> {
