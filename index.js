@@ -3,6 +3,8 @@ const mysql = require("mysql2");
 const dotenv = require("dotenv")
 const cors = require("cors")
 const bcrypt = require("bcryptjs")
+const path = require("path")
+const multer = require("multer")
 
 // create instance
 const app = express();
@@ -27,6 +29,27 @@ app.use(express.json());
 app.use(express.urlencoded({
     extended:true    
 }))
+app.use("/public", express.static(
+    path.join(__dirname,"/public")
+))
+
+
+
+//multer
+const storage = multer.diskStorage({
+    destination:  (req,file,callback)=> {
+        callback(null,path.join(__dirname,"../public/images"))
+    },
+    filename:(req,file,callback)=> {
+        callback(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
+    }
+})
+
+const upload = multer({storage:storage})
+const imageupload = upload.fields([{name:"image"}])
+
+
+//ROUTES
 
 app.post('/register', async (req,res)=> {
     const {username,password,firstName,lastName,email} = req.body
@@ -36,6 +59,19 @@ app.post('/register', async (req,res)=> {
           console.log(err)
     })
 })
+
+app.post('/registeraddtl', imageupload , (req,res)=> {
+    const {userid,birthday,city,filename} = req.body
+    const image = req.files.image[0]
+    const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+    console.log(imagepath)
+
+    db.query("update register set city=?, birthday=?, picname=?, picpath=? where userid=?",[city,birthday,filename,imagepath,userid] , 
+    (err,result) => {   
+          console.log(err)
+    })
+})
+
 
 
 // app.post('/createpost', async (req,res)=> {
