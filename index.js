@@ -73,7 +73,7 @@ app.post('/registeraddtl', (req,res) => {
 
 app.get('/search', (req,res) => {
     const {search} = req.body
-    const searchquery = ("'%"+ search + "%'")
+    const searchquery = (`'%${search}%'`)
    
     db.query(
         "select * from register where firstName like ?",searchquery, 
