@@ -203,7 +203,13 @@ app.post('/newpostother', async (req,res)=> {
 
 app.post('/postfeed', async (req,res)=> {
     const {userid} = req.body
-    db.query("select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, posts.date_updated, register.firstName, register.lastName, register.username from posts inner join register on posts.userid = register.userid where posts.wallid=? order by posts.postid desc",[userid] , 
+    db.query(`select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
+    posts.date_updated, register.firstName, register.lastName, register.username,
+    registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName  
+    from posts inner join register on posts.userid = register.userid 
+    inner join register registerWall on posts.wallid = registerWall.userid
+    where posts.wallid=?
+    order by posts.postid desc`,[userid] , 
     (err,result) => {   
         if(err){
             console.log(err.message);
