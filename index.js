@@ -230,6 +230,18 @@ app.post('/friendrequest', async (req,res)=> {
     })
 })
 
+app.post('/friendrequestpage', async (req,res)=> {
+    const {userid} = req.body
+    db.query(`select * from friend_requests
+    inner join register on friend_requests.requestorid=register.userid 
+    where friend_requests.userid = ?`,[userid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message:result})
+    })
+})
+
+
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
     console.log("server started");
