@@ -237,7 +237,7 @@ app.post('/friendrequestpage', async (req,res)=> {
     where friend_requests.userid = ?`,[userid] , 
     (err,result) => {   
           console.log(err)
-          return res.status(200).json({message:result})
+          return res.status(200).json({message: "success", array:result})
     })
 })
 
