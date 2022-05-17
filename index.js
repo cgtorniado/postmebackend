@@ -177,7 +177,7 @@ app.post('/profile', (req,res)=>  {
 
 app.post('/newpost', async (req,res)=> {
     const {userid,post} = req.body
-    db.query("insert into posts (userid content) values (?,?)",[userid,post] , 
+    db.query("insert into posts (userid,content) values (?,?)",[userid,post] , 
     (err,result) => {   
         if(err){
             console.log(err.message);
