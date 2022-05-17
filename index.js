@@ -188,6 +188,19 @@ app.post('/newpost', async (req,res)=> {
     })
 })
 
+app.post('/postfeed', async (req,res)=> {
+    const {userid} = req.body
+    db.query("select posts.postid, posts.userid,  posts.content, posts.date_created, posts.date_updated, register.firstName, register.lastName, register.username from posts inner join register on posts.userid = register.userid where posts.userid=?",[userid] , 
+    (err,result) => {   
+        if(err){
+            console.log(err.message);
+        }
+
+        console.log(result)
+        return res.status(200).json({message: "success", array:result})
+    })
+})
+
 
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
