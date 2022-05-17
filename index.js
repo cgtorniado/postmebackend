@@ -43,7 +43,7 @@ app.post('/register', async (req,res)=> {
 })
 
 
-app.post('/registeraddtl' = (req,res) => {
+app.post('/registeraddtl', (req,res) => {
     const {userid,birthday,city} = req.body
    
     db.query(
