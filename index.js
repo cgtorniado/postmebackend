@@ -75,7 +75,7 @@ app.get('/search', (req,res) => {
     const {search} = req.body
    
     db.query(
-        `select * from register where firstName like '%${search}%'` , 
+        "select * from register where firstName like '%"+search+"%'" , 
         (err,result)=> {
             if(err){
                 return console.log(err.message)
