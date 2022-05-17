@@ -243,6 +243,15 @@ app.post('/friendrequestpage', (req,res)=> {
     })
 })
 
+app.post('/frsearcher', (req,res)=> {
+    const {userid,wallid} = req.body
+    db.query(`select * from friend_requests where userid=? and requestorid=?`,[wallid,userid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "success", array:result})
+    })
+})
+
 
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
