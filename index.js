@@ -44,10 +44,10 @@ app.post('/register', async (req,res)=> {
 
 
 app.post('/registeraddtl', (req,res) => {
-    const {userid,birthday,city} = req.body
+    const {username,birthday,city} = req.body
    
     db.query(
-        "update register set city = ? , birthday = ?  where userid = ?",[city,birthday,userid] , 
+        "update register set city = ? , birthday = ?  where username = ?",[city,birthday,username] , 
         (err,result)=> {
             if(err){
                 return console.log(err.message)
