@@ -42,17 +42,21 @@ app.post('/register', async (req,res)=> {
     })
 })
 
-app.post('/registeraddtl', (req,res)=> {
+
+app.post('/registeraddtl' = (req,res) => {
     const {userid,birthday,city} = req.body
    
-    db.query("update register set city=?, birthday=? where userid=?",[city,birthday,userid] , 
-    (err) => {   
-          console.log(err)
-    })
-
-    return res.status(200).json({message: "success", array:result})
-
-
+    db.query(
+        "update register set city = ? , birthday = ?  where userid = ?",[city,birthday,userid] , 
+        (err,result)=> {
+            if(err){
+                return console.log(err.message)
+            }
+          
+            return res.status(200).json({message:"record has been updated"})
+               
+        }
+    )
 })
 
 
