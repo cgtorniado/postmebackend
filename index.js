@@ -188,6 +188,19 @@ app.post('/newpost', async (req,res)=> {
     })
 })
 
+app.post('/newpostother', async (req,res)=> {
+    const {userid,wallid,post} = req.body
+    db.query("insert into posts (userid,wallid,content) values (?,?,?)",[userid,wallid,post] , 
+    (err,result) => {   
+        if(err){
+            console.log(err.message);
+        }
+
+        console.log(result)
+        return res.status(200).json({message: "success", array:result})
+    })
+})
+
 app.post('/postfeed', async (req,res)=> {
     const {userid} = req.body
     db.query("select posts.postid, posts.userid,  posts.content, posts.date_created, posts.date_updated, register.firstName, register.lastName, register.username from posts inner join register on posts.userid = register.userid where posts.wallid=? order by posts.postid desc",[userid] , 
