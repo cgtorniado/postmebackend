@@ -221,6 +221,15 @@ app.post('/postfeed', async (req,res)=> {
 })
 
 
+app.post('/friendrequest', async (req,res)=> {
+    const {userid,otherid} = req.body
+    db.query("insert into friend_requests (userid,requestorid) values (?,?)",[otherid,userid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "successfully added"})
+    })
+})
+
 
 app.listen(process.env.PORT || 5001, '0.0.0.0', ()=> {
     console.log("server started");
