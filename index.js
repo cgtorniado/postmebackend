@@ -53,7 +53,7 @@ app.post('/registeraddtl', (req,res) => {
                 return console.log(err.message)
             }
           
-            return res.status(200).json({message:"record has been updated"})
+            return res.status(200).json({result:result,message:"record has been updated"})
                
         }
     )
