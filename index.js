@@ -289,6 +289,21 @@ app.post('/addcomment', (req,res)=> {
     })
 })
 
+app.post('/commentfeed',  (req,res)=> {
+    const {postid} = req.body
+    db.query(`select comments.commentid, comments.postid,comments.content,comments.date_created,
+    register.firstName,register.lastName from comments
+    inner join register on comments.userid = register.userid`,[postid] , 
+    (err,result) => {   
+        if(err){
+            console.log(err.message);
+        }
+
+        console.log(result)
+        return res.status(200).json({message: "success", array:result})
+    })
+})
+
 
 
 
