@@ -267,7 +267,7 @@ app.post('/editprofile', (req,res)=> {
     db.query(`UPDATE register SET firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? WHERE userid=?`,[firstName,lastName,nickname,intro,status,birthday,newcity,userid] , 
     (err,result) => {   
           console.log(err)
-          return res.status(200).json({message: "successfully deleted"})
+          return res.status(200).json({message: "successfully edited",array:result})
     })
 })
 
