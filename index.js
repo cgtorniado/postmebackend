@@ -304,6 +304,14 @@ app.post('/commentfeed',  (req,res)=> {
     })
 })
 
+app.post('/deletecomment', (req,res)=> {
+    const {commentid} = req.body
+    db.query(`DELETE FROM comments WHERE commentid =?`,[commentid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "successfully deleted"})
+    })
+})
 
 
 
