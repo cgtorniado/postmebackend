@@ -293,7 +293,7 @@ app.post('/commentfeed',  (req,res)=> {
     const {postid} = req.body
     db.query(`select comments.commentid, comments.postid,comments.content,comments.date_created,
     register.firstName,register.lastName from comments
-    inner join register on comments.userid = register.userid`,[postid] , 
+    inner join register on comments.userid = register.userid where comments.postid=? order by comments.postid desc`,[postid] , 
     (err,result) => {   
         if(err){
             console.log(err.message);
