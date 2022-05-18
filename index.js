@@ -263,7 +263,7 @@ app.post('/deletepost', (req,res)=> {
 })
 
 app.post('/editprofile', (req,res)=> {
-    const {userid,firstName,lastName,nickname,intro,status,birthday,city} = req.body
+    const {firstName,lastName,nickname,intro,status,birthday,city,userid} = req.body
     db.query(`UPDATE register SET firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? WHERE userid=?`,[firstName,lastName,nickname,intro,status,birthday,city,userid] , 
     (err,result) => {   
           console.log(err)
