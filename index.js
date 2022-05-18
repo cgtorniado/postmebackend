@@ -262,6 +262,15 @@ app.post('/deletepost', (req,res)=> {
     })
 })
 
+app.post('/editprofile', (req,res)=> {
+    const {userid,newcity} = req.body
+    db.query(`UPDATE register SET city =? WHERE userid=?`,[newcity,userid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "successfully deleted"})
+    })
+})
+
 
 
 
