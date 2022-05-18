@@ -280,6 +280,15 @@ app.post('/editpost', (req,res)=> {
     })
 })
 
+app.post('/addcomment', (req,res)=> {
+    const {content,postid,userid} = req.body
+    db.query(`insert into comments (postid,content,userid) values (?,?,?)`,[postid,content,userid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "successfully edited",array:result})
+    })
+})
+
 
 
 
