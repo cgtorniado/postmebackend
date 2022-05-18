@@ -271,6 +271,16 @@ app.post('/editprofile', (req,res)=> {
     })
 })
 
+app.post('/editpost', (req,res)=> {
+    const {content,postid} = req.body
+    db.query(`update posts set content=? where postid=?`,[content,postid] , 
+    (err,result) => {   
+          console.log(err)
+          return res.status(200).json({message: "successfully edited",array:result})
+    })
+})
+
+
 
 
 
