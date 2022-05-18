@@ -264,7 +264,7 @@ app.post('/deletepost', (req,res)=> {
 
 app.post('/editprofile', (req,res)=> {
     const {firstName,lastName,nickname,intro,status,birthday,city,userid} = req.body
-    db.query(`UPDATE register SET firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? WHERE userid=?`,[firstName,lastName,nickname,intro,status,birthday,city,userid] , 
+    db.query(`update register set firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? where userid=?`,[firstName,lastName,nickname,intro,status,birthday,city,userid] , 
     (err,result) => {   
           console.log(err)
           return res.status(200).json({message: "successfully edited",array:result})
