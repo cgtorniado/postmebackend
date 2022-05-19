@@ -245,7 +245,7 @@ app.post('/notiffeed',  (req,res)=> {
     from notifications as notif
     inner join register as receiver on notif.notifreceiverid = receiver.userid
     inner join register as sender on notif.notifsenderid = sender.userid
-    where notif.notifreceiverid=?`,[userid] , 
+    where receiver.userid=?`,[userid] , 
     (err,result) => {   
         if(err){
             console.log(err.message);
