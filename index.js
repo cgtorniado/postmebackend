@@ -239,8 +239,8 @@ app.post("/postfeed", (req, res) => {
 app.post("/notiffeed", (req, res) => {
   db.query(
     `select notif.notifid, notif.notiftype, notif.new_comment, notif.date_created,
-    posts.postid, posts.userid, posts.wallid, postowner.firstName, postowner.lastName,
-    wallowner.firstName, wallowner.lastName
+    posts.postid, posts.userid, posts.wallid, postowner.firstName as whopostedFN, postowner.lastName as whopostedLN,
+    wallowner.firstName as whosewallFN, wallowner.lastName as whosewallLN
         from notifications as notif
         inner join posts on notif.othertypeid = posts.postid
         inner join register as postowner on posts.userid = postowner.userid
