@@ -206,8 +206,8 @@ app.post('/newpostother',  (req,res)=> {
 })
 
 app.post('/newpostothernotif',  (req,res)=> {
-    const {userid,wallid,postid} = req.body
-    db.query("insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid) values (?,?,?,?)",["post",postid,wallid,userid] , 
+    const {userid,wallid,postid,notiftype} = req.body
+    db.query("insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid) values (?,?,?,?)",[notiftype,postid,wallid,userid] , 
     (err,result) => {   
         if(err){
             console.log(err.message);
