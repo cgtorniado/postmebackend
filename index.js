@@ -201,6 +201,19 @@ app.post('/newpostother',  (req,res)=> {
     })
 })
 
+app.post('/newpostothernotif',  (req,res)=> {
+    const {userid,wallid,postid} = req.body
+    db.query("insert into posts (notiftype,othertypeid,notifreceiverid,notifsenderid) values (?,?,?,?)",["post",postid,wallid,userid] , 
+    (err,result) => {   
+        if(err){
+            console.log(err.message);
+        }
+
+        console.log(result)
+        return res.status(200).json({message: "success", array:result})
+    })
+})
+
 app.post('/postfeed',  (req,res)=> {
     const {userid} = req.body
     db.query(`select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
@@ -316,9 +329,9 @@ app.post('/deletecomment', (req,res)=> {
 app.post('/editcomment', (req,res)=> {
     const {content,commentid} = req.body
     db.query(`update comments set content=? where commentid=?`,[content,commentid] , 
-    (err,result) => {   
+    (err,result) => {
           console.log(err)
-          return res.status(200).json({message: "successfully edited",array:result})
+          return res.status(200).json({message: "successfully edited"})
     })
 })
 
