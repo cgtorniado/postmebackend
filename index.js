@@ -236,7 +236,7 @@ app.post("/postfeed", (req, res) => {
   );
 });
 
-app.get("/notiffeed", (req, res) => {
+app.post("/notiffeed", (req, res) => {
   db.query(
     `select notif.notifid, notif.notiftype, notif.new_comment, notif.date_created,
     posts.postid, posts.userid, posts.wallid, postowner.firstName, postowner.lastName,
