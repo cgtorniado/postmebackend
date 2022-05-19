@@ -202,7 +202,7 @@ app.post("/newcommentnotif", (req, res) => {
     const { userid, commentid, notiftype,postid } = req.body;
     db.query(
       "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
-      [notiftype, commentid, postid, userid, "1"],
+      [notiftype, postid, commentid, userid, "1"],
       (err, result) => {
         if (err) {
           console.log(err.message);
