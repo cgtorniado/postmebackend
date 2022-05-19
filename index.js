@@ -214,16 +214,17 @@ app.post("/newcommentnotif", (req, res) => {
     );
   });
 
-app.get("/postfeed", (req, res) => {
+app.post("/postfeed", (req, res) => {
+  const { userid } = req.body;
   db.query(
-    `select notif.notifid, notif.notiftype, notif.new_comment, notif.date_created,
-    posts.postid, posts.userid, posts.wallid, postowner.firstName, postowner.lastName,
-    wallowner.firstName, wallowner.lastName
-        from notifications as notif
-        inner join posts on notif.othertypeid = posts.postid
-        inner join register as postowner on posts.userid = postowner.userid
-        inner join register as wallowner on posts.wallid = wallowner.userid
-        order by notif.date_created desc`,
+    `select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
+    posts.date_updated, register.firstName, register.lastName, register.username,
+    registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName  
+    from posts inner join register on posts.userid = register.userid 
+    inner join register registerWall on posts.wallid = registerWall.userid
+    where posts.wallid=?
+    order by posts.postid desc`,
+    [userid],
     (err, result) => {
       if (err) {
         console.log(err.message);
@@ -235,17 +236,16 @@ app.get("/postfeed", (req, res) => {
   );
 });
 
-app.post("/notiffeed", (req, res) => {
-  const { userid } = req.body;
+app.get("/notiffeed", (req, res) => {
   db.query(
-    `select notif.notifid, notif.notiftype,notif.othertypeid,notif.notifreceiverid,notif.notifsenderid, notif.new_comment, notif.date_created,
-    receiver.userid as receiverid, receiver.firstName as receiverfName, receiver.lastName as receiverlName,
-    sender.userid as senderid, sender.firstName as senderfName, sender.lastName as senderlName
-    from notifications as notif
-    inner join register as receiver on notif.notifreceiverid = receiver.userid
-    inner join register as sender on notif.notifsenderid = sender.userid
-    where notif.notifreceiverid = ? order by notif.date_created desc`,
-    [userid],
+    `select notif.notifid, notif.notiftype, notif.new_comment, notif.date_created,
+    posts.postid, posts.userid, posts.wallid, postowner.firstName, postowner.lastName,
+    wallowner.firstName, wallowner.lastName
+        from notifications as notif
+        inner join posts on notif.othertypeid = posts.postid
+        inner join register as postowner on posts.userid = postowner.userid
+        inner join register as wallowner on posts.wallid = wallowner.userid
+        order by notif.date_created desc`,
     (err, result) => {
       if (err) {
         console.log(err.message);
