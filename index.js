@@ -239,16 +239,12 @@ app.post('/postfeed',  (req,res)=> {
 
 app.post('/notiffeed',  (req,res)=> {
     const {userid} = req.body
-    db.query(`select notif.notifid, notif.notiftype,notif.othertypeid,notif.notifreceiverid,notif.notifsenderid, notif.new_comment, register.firstName, register.lastName, sender.firstName, sender.lastName
-
+    db.query(`select notif.notifid, notif.notiftype,notif.othertypeid,notif.notifreceiverid,notif.notifsenderid, notif.new_comment,
+    receiver.userid as receiverid, receiver.firstName as receiverfName, receiver.lastName as receiverlName,
+    sender.userid as senderid, sender.firstName as sender, sender.lastName as senderlName
     from notifications as notif
-
-    inner join register on 
-    notif.notifreceiverid = register.userid
-
-    inner join register as sender on 
-    notif.notifsenderid = sender.userid
-
+    inner join register as receiver on notif.notifreceiverid = receiver.userid
+    inner join register as sender on notif.notifsenderid = sender.userid
     where notif.notifreceiverid = ? `,[userid] , 
     (err,result) => {   
         if(err){
