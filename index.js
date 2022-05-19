@@ -237,7 +237,7 @@ app.post('/postfeed',  (req,res)=> {
     })
 })
 
-app.post('/commentfeed',  (req,res)=> {
+app.post('/notiffeed',  (req,res)=> {
     const {userid} = req.body
     db.query(`select notif.notifid, notif.notiftype,notif.othertypeid,notif.notifreceiverid,notif.notifsenderid, notif.new_comment,
     receiver.userid as receiverid, receiver.firstName as receiverfName, receiver.lastName as receiverlName,
