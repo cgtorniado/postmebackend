@@ -199,7 +199,7 @@ app.post("/newpostothernotif", (req, res) => {
 
 
 app.post("/newcommentnotif", (req, res) => {
-    const { userid, commentid, notiftype } = req.body;
+    const { userid, commentid, notiftype,postid } = req.body;
     db.query(
       "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
       [notiftype, commentid, postid, userid, "1"],
