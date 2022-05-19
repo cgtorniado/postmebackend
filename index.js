@@ -185,10 +185,13 @@ app.post('/newpost',  (req,res)=> {
 
         console.log(result)
         return res.status(200).json({message: "success", array:result})
+    
     })
+    
 })
 
 app.post('/newpostother',  (req,res)=> {
+
     const {userid,wallid,post} = req.body
     db.query("insert into posts (userid,wallid,content) values (?,?,?)",[userid,wallid,post] , 
     (err,result) => {   
@@ -198,6 +201,10 @@ app.post('/newpostother',  (req,res)=> {
 
         console.log(result)
         return res.status(200).json({message: "success", array:result})
+    })
+
+    db.query("select max(postid) from posts where userid=?",userid,(results)=>{
+        return res.status(200).json({message:"newpostid",result:results})
     })
 })
 
