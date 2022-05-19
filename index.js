@@ -197,6 +197,23 @@ app.post("/newpostothernotif", (req, res) => {
   );
 });
 
+
+app.post("/newcommentnotif", (req, res) => {
+    const { userid, commentid, notiftype } = req.body;
+    db.query(
+      "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
+      [notiftype, commentid, postid, userid, "1"],
+      (err, result) => {
+        if (err) {
+          console.log(err.message);
+        }
+  
+        console.log(result);
+        return res.status(200).json({ message: "successfully added", array: result });
+      }
+    );
+  });
+
 app.post("/postfeed", (req, res) => {
   const { userid } = req.body;
   db.query(
