@@ -203,9 +203,6 @@ app.post('/newpostother',  (req,res)=> {
         return res.status(200).json({message: "success", array:result})
     })
 
-    db.query("select max(postid) from posts where userid=?",userid,(results)=>{
-        return res.status(200).json({message:"newpostid",result:results})
-    })
 })
 
 app.post('/newpostothernotif',  (req,res)=> {
