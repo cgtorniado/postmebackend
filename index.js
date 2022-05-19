@@ -315,7 +315,7 @@ app.post('/deletecomment', (req,res)=> {
 
 app.post('/editcomment', (req,res)=> {
     const {content,commentid} = req.body
-    db.query(`update coments set content=? where commentid=?`,[content,commentid] , 
+    db.query(`update comments set content=? where commentid=?`,[content,commentid] , 
     (err,result) => {   
           console.log(err)
           return res.status(200).json({message: "successfully edited",array:result})
