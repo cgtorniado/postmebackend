@@ -417,7 +417,7 @@ app.post("/likefeed", (req, res) => {
     username.firstName, username.lastName
     from post_likes as likes
     inner join register as username 
-    on likes.userid = username.userid;
+    on likes.userid = username.userid
     where likes.postid = ?`,
     [postid],
     (err, result) => {
