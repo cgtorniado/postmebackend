@@ -410,6 +410,27 @@ app.post("/addlike", (req, res) => {
   );
 });
 
+app.post("/likefeed", (req, res) => {
+  const { postid } = req.body;
+  db.query(
+    `select likes.likeid, likes.postid, likes.userid,
+    username.firstName, username.lastName
+    from post_likes as likes
+    inner join register as username 
+    on likes.userid = username.userid;
+    where likes.postid = ?`,
+    [postid],
+    (err, result) => {
+      if (err) {
+        console.log(err.message);
+      }
+
+      console.log(result);
+      return res.status(200).json({ message: "success", array: result });
+    }
+  );
+});
+
 app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
   console.log("server started");
   db.connect((err) => {
