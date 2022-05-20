@@ -411,7 +411,7 @@ app.post("/addlike", (req, res) => {
 });
 
 app.post("/likefeed", (req, res) => {
-  const { postid } = req.body;
+  const {postid} = req.body;
   db.query(
     `select likes.likeid, likes.postid, likes.userid as userid,
     username.firstName, username.lastName
