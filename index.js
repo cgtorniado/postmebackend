@@ -398,6 +398,18 @@ app.post("/editcomment", (req, res) => {
   );
 });
 
+app.post("/addlike", (req, res) => {
+  const { userid, postid } = req.body;
+  db.query(
+    "insert into post_likes (postid,userid) values (?,?)",
+    [postid, userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully added",response:result });
+    }
+  );
+});
+
 app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
   console.log("server started");
   db.connect((err) => {
