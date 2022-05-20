@@ -422,7 +422,7 @@ app.post("/likesearcher", (req, res) => {
   const { postid,userid } = req.body;
   db.query(`select * FROM post_likes WHERE postid =? and userid=?`, [postid,userid], (err, result) => {
     console.log(err);
-    return res.status(200).json({ message: "successfully deleted" });
+    return res.status(200).json({ message: "successfully searched for likes",array:result });
   });
 });
 
