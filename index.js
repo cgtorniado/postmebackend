@@ -209,7 +209,7 @@ app.post("/newcommentnotif", (req, res) => {
         }
   
         console.log(result);
-        return res.status(200).json({ message: "successfully added", array: result });
+        return res.status(200).json({ message: "successfully added  notif", array: result });
       }
     );
   });
@@ -231,7 +231,7 @@ app.post("/postfeed", (req, res) => {
       }
 
       console.log(result);
-      return res.status(200).json({ message: "success", array: result });
+      return res.status(200).json({ message: "posts successfully loaded", array: result });
     }
   );
 });
@@ -351,7 +351,7 @@ app.post("/addcomment", (req, res) => {
       console.log(err);
       return res
         .status(200)
-        .json({ message: "successfully added", array: result });
+        .json({ message: "successfully added comment", array: result });
     }
   );
 });
@@ -369,7 +369,7 @@ app.post("/commentfeed", (req, res) => {
       }
 
       console.log(result);
-      return res.status(200).json({ message: "success", array: result });
+      return res.status(200).json({ message: "comments successfully loaded", array: result });
     }
   );
 });
@@ -381,7 +381,7 @@ app.post("/deletecomment", (req, res) => {
     [commentid],
     (err, result) => {
       console.log(err);
-      return res.status(200).json({ message: "successfully deleted" });
+      return res.status(200).json({ message: "successfully deleted comment" });
     }
   );
 });
@@ -393,7 +393,7 @@ app.post("/editcomment", (req, res) => {
     [content, commentid],
     (err, result) => {
       console.log(err);
-      return res.status(200).json({ message: "successfully edited" });
+      return res.status(200).json({ message: "successfully edited comment" });
     }
   );
 });
@@ -405,7 +405,7 @@ app.post("/addlike", (req, res) => {
     [postid, userid],
     (err, result) => {
       console.log(err);
-      return res.status(200).json({ message: "successfully added",response:result });
+      return res.status(200).json({ message: "successfully added likes",response:result });
     }
   );
 });
@@ -426,7 +426,7 @@ app.post("/likefeed", (req, res) => {
       }
 
       console.log(result);
-      return res.status(200).json({ message: "success", array: result });
+      return res.status(200).json({ message: "likes successfully loaded", array: result });
     }
   );
 });
