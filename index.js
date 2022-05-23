@@ -301,7 +301,7 @@ app.post("/flsearcher", (req, res) => {
   const { userid, wallid } = req.body;
   db.query(
     `select * friends_list where userid=? and friendid=?`,
-    [userid, wallid],
+    [wallid,userid],
     (err, result) => {
       console.log(err);
       return res.status(200).json({ message: "success", array: result });
@@ -313,7 +313,7 @@ app.post("/deletepost", (req, res) => {
   const { postid } = req.body;
   db.query(`DELETE FROM posts WHERE postid =?`, [postid], (err, result) => {
     console.log(err);
-    return res.status(200).json({ message: "successfully deleted post",  });
+    return res.status(200).json({ message: "successfully deleted post",array: result  });
   });
 });
 
