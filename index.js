@@ -286,16 +286,16 @@ app.post("/friendrequestpage", (req, res) => {
 });
 
 app.post("/frsearcher", (req, res) => {
-  const { userid, wallid } = req.body;
+  const { userid, wallid } = req.body
   db.query(
     `select * from friend_requests where userid=? and requestorid=?`,
     [wallid, userid],
     (err, result) => {
-      console.log(err);
-      return res.status(200).json({ message: "success", array: result });
+      console.log(err)
+      return res.status(200).json({ message: "success", array: result })
     }
-  );
-});
+  )
+})
 
 app.post("/flsearcher", (req, res) => {
   const { userid, wallid } = req.body;
@@ -304,10 +304,10 @@ app.post("/flsearcher", (req, res) => {
     [userid,wallid],
     (err, result) => {
       console.log(err);
-      return res.status(200).json({ message: "success", array: result });
+      return res.status(200).json({ message: "success", array: result })
     }
-  );
-});
+  )
+})
 
 app.post("/deletepost", (req, res) => {
   const { postid } = req.body;
@@ -491,10 +491,10 @@ app.post("/deletelike", (req, res) => {
 app.post("/likesearcher", (req, res) => {
   const { postid,userid } = req.body;
   db.query(`select * FROM post_likes WHERE postid =? and userid=?`, [postid,userid], (err, result) => {
-    console.log(err);
-    return res.status(200).json({ message: "successfully searched for likes",array:result });
-  });
-});
+    console.log(err)
+    return res.status(200).json({ message: "successfully searched for likes",array:result })
+  })
+})
 
 app.post("/likefeed", (req, res) => {
   const {postid} = req.body;
