@@ -344,7 +344,7 @@ app.post("/deleterequest", (req, res) => {
   });
 });
 
-app.post("/editprofile", (req, res) => {
+app.post("/editprofile",imageupload ,(req, res) => {
   const {
     firstName,
     lastName,
@@ -355,9 +355,14 @@ app.post("/editprofile", (req, res) => {
     city,
     userid
   } = req.body;
+
+  const image = req.files.image[0]
+  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+  console.log(imagepath)
+
   db.query(
-    `update register set firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? where userid=?`,
-    [firstName, lastName, nickname, intro, status, birthday, city, userid],
+    `update register set firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=?,picpath=? where userid=?`,
+    [firstName, lastName, nickname, intro, status, birthday, city,imagepath, userid],
     (err, result) => {
       console.log(err);
       return res
