@@ -517,6 +517,28 @@ app.post("/likefeed", (req, res) => {
   );
 });
 
+app.post("/flfeed", (req, res) => {
+  try {
+    const { userid } = req.body;
+
+    db.query(`
+    select friends_list.friendlistid, friends_list.userid, friends_list.friendid, register.firstName, register.lastName,
+    register.nickname, register.city, register.birthday
+    from friends_list 
+    inner join register on friends_list.friendid = register.userid
+    where friends_list.userid=?`, userid, (err, result) => {
+      if (err) {
+        console.log(err.message);
+      }
+
+      console.log(result);
+      return res.status(200).json({ message: "successfully loaded friends", array: result });
+    });
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
   console.log("server started");
   db.connect((err) => {
