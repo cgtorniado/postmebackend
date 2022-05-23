@@ -334,7 +334,7 @@ app.post("/editprofile", (req, res) => {
     status,
     birthday,
     city,
-    userid,
+    userid
   } = req.body;
   db.query(
     `update register set firstName=?,lastName=?,nickname=?,intro=?,status=?,birthday=?,city=? where userid=?`,
