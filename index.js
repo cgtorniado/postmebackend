@@ -411,6 +411,26 @@ app.post("/editusername" ,(req, res) => {
   );
 });
 
+app.post("/editpassword" , async(req, res) => {
+  const {
+    password,
+    userid
+  } = req.body;
+
+  const hashPassword = await bcrypt.hash(password, 8);
+
+  db.query(
+    `update register set password=? where userid=?`,
+    [hashPassword, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully edited", array: result });
+    }
+  );
+});
+
 app.post("/editpost", (req, res) => {
   const { content, postid } = req.body;
   db.query(
