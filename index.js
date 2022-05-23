@@ -65,17 +65,17 @@ app.post("/register", async (req, res) => {
   );
 });
 
-app.post("/registeraddtl", imageupload,(req, res) => {
+app.post("/registeraddtl",(req, res) => {
 
   const {username, city, birthday} = req.body;
-  const image = req.files.image[0]
-  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+  // const image = req.files.image[0]
+  // const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
 
-    console.log(imagepath)
+    // console.log(imagepath)
 
   db.query(
-    "update register set city = ? , birthday = ?, picpath=?  where username = ?",
-    [city, birthday, imagepath, username],
+    "update register set city = ? , birthday = ? where username = ?",
+    [city, birthday, username],
     (err, result) => {
       if (err) {
         return console.log(err.message);
