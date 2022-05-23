@@ -301,7 +301,15 @@ app.post("/deletepost", (req, res) => {
   const { postid } = req.body;
   db.query(`DELETE FROM posts WHERE postid =?`, [postid], (err, result) => {
     console.log(err);
-    return res.status(200).json({ message: "successfully deleted" });
+    return res.status(200).json({ message: "successfully deleted post",  });
+  });
+});
+
+app.post("/deletepost", (req, res) => {
+  const { requestid } = req.body;
+  db.query(`DELETE FROM friend_requests WHERE requestid =?`, [requestid], (err, result) => {
+    console.log(err);
+    return res.status(200).json({ message: "successfully deleted friend request", array: result});
   });
 });
 
