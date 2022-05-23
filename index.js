@@ -300,7 +300,7 @@ app.post("/frsearcher", (req, res) => {
 app.post("/flsearcher", (req, res) => {
   const { userid, wallid } = req.body;
   db.query(
-    `select * friends_list where userid=? and friendid=?`,
+    `select * from  friends_list where userid=? and friendid=?`,
     [userid,wallid],
     (err, result) => {
       console.log(err);
