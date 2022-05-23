@@ -66,8 +66,10 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/registeraddtl", imageupload,(req, res) => {
-  const { username, birthday, city,image } = req.body;
-  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+  const { file,
+  body:{username, city,birthday } } = req;
+ 
+  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+file.filename
     console.log(imagepath)
 
   db.query(
