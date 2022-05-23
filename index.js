@@ -300,7 +300,7 @@ app.post("/frsearcher", (req, res) => {
 app.post("/flsearcher", (req, res) => {
   const { userid, wallid } = req.body;
   db.query(
-    `select * from friends_list where userid=? and friendid=?`,
+    `select * friends_list where userid=? and friendid=?`,
     [userid,wallid],
     (err, result) => {
       console.log(err);
@@ -391,7 +391,7 @@ app.post("/addfriend", (req, res) => {
   
   db.query(
     `insert into friends_list (friendid,userid) values (?,?)`,
-    [userid, friendid],
+    [userid, userid],
     (err, result) => {
       console.log(err);
       return res
@@ -410,6 +410,19 @@ app.post("/addfriend", (req, res) => {
         .json({ message: "successfully added comment", array: result });
     }
   );
+});
+
+app.post("/deletefriend", (req, res) => {
+  const { friendid, userid } = req.body;
+  db.query(`DELETE FROM friends_list WHERE friendid =? and userid=?`, [friendid, userid], (err, result) => {
+    console.log(err)
+    return res.status(200).json({ message: "successfully deleted friend request", array: result});
+  });
+
+  db.query(`DELETE FROM friends_list WHERE friendid =? and userid=?`, [userid,friendid], (err, result) => {
+    console.log(err)
+    return res.status(200).json({ message: "successfully deleted friend request", array: result});
+  });
 });
 
 
