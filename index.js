@@ -238,7 +238,7 @@ app.post("/postfeed", (req, res) => {
   const { userid } = req.body;
   db.query(
     `select posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
-    posts.date_updated, register.firstName, register.lastName, register.username,
+    posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
     registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName  
     from posts inner join register on posts.userid = register.userid 
     inner join register registerWall on posts.wallid = registerWall.userid
