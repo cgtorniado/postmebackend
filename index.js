@@ -391,7 +391,7 @@ app.post("/addfriend", (req, res) => {
   
   db.query(
     `insert into friends_list (friendid,userid) values (?,?)`,
-    [userid, userid],
+    [userid, friendid],
     (err, result) => {
       console.log(err);
       return res
