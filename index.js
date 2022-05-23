@@ -373,6 +373,25 @@ app.post("/editprofile",imageupload ,(req, res) => {
   );
 });
 
+app.post("/editemail" ,(req, res) => {
+  const {
+    email,
+    userid
+  } = req.body;
+
+
+  db.query(
+    `update register set email=? where userid=?`,
+    [email, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully edited", array: result });
+    }
+  );
+});
+
 app.post("/editpost", (req, res) => {
   const { content, postid } = req.body;
   db.query(
