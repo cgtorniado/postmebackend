@@ -526,7 +526,7 @@ app.post("/flfeed", (req, res) => {
     register.nickname, register.city, register.birthday
     from friends_list 
     inner join register on friends_list.friendid = register.userid
-    where friends_list.userid=?`, userid, (err, result) => {
+    where friends_list.userid=?`, [userid], (err, result) => {
       if (err) {
         console.log(err.message);
       }
