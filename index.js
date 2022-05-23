@@ -30,22 +30,7 @@ app.use(
   })
 );
 
-// all multer related
-const storage = multer.diskStorage({
-  destination:  (req,file,callback)=> {
-      callback(null,path.join(__dirname,"../public/images"))
-  },
-  filename:(req,file,callback)=> {
-      callback(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
-  }
-})
 
-const upload = multer({storage:storage})
-const imageupload = upload.fields([{name:"image"}])
-
-app.use("/public", express.static(
-  path.join(__dirname,"/public")
-))
 
 
 //ROUTES
@@ -65,38 +50,50 @@ app.post("/register", async (req, res) => {
   );
 });
 
-app.post("/registeraddtl",(req, res) => {
+app.use("/public", express.static(
+  path.join(__dirname,"/public")
+))
 
-  const {username, city, birthday} = req.body;
-  // const image = req.files.image[0]
-  // const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+// all multer related
+const storage = multer.diskStorage({
+  destination:  (req,file,callback)=> {
+      callback(null,path.join(__dirname,"./public/images"))
+  },
+  filename:(req,file,callback)=> {
+      callback(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
+  }
+})
 
-    // console.log(imagepath)
+const upload = multer({storage:storage})
+const imageupload = upload.fields([{name:"image"}])
+
+
+app.post("/registeraddtl",imageupload,(req, res) => {
+
+  const {username, city, birthday} = req.body
+  const image = req.files.image[0]
+  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+  console.log(imagepath)
+
 
   db.query(
-    "update register set city = ? , birthday = ? where username = ?",
-    [city, birthday, username],
+    "update register set city = ? , birthday = ?, picpath=? where username = ?",
+    [city, birthday,imagepath, username],
     (err, result) => {
       if (err) {
         return console.log(err.message);
       }
 
-      db.query(
-        "select * from register where username = ?",
-        [username],
-        (err, result) => {
-          if (err) {
-            return console.log(err.message);
-          }
+      return res
+        .status(200)
+        .json({ message: "update results", result: result  })
+    
+    })
 
-          return res
-            .status(200)
-            .json({ message: "profile updated", result: result });
-        }
-      );
+     
     }
-  );
-});
+  )
+
 
 app.post("/search", (req, res) => {
   const { search } = req.body;
