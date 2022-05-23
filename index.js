@@ -41,7 +41,7 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage:storage})
-const imageupload = upload.fields([{name:"image"}])
+// const imageupload = upload.fields([{name:"image"}])
 
 app.use("/public", express.static(
   path.join(__dirname,"/public")
@@ -65,7 +65,7 @@ app.post("/register", async (req, res) => {
   );
 });
 
-app.post("/registeraddtl", imageupload,(req, res) => {
+app.post("/registeraddtl", upload,(req, res) => {
   const { file,
   body:{username, city,birthday } } = req;
  
