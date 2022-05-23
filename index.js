@@ -305,7 +305,7 @@ app.post("/deletepost", (req, res) => {
   });
 });
 
-app.post("/deletepost", (req, res) => {
+app.post("/deleterequest", (req, res) => {
   const { requestid } = req.body;
   db.query(`DELETE FROM friend_requests WHERE requestid =?`, [requestid], (err, result) => {
     console.log(err);
