@@ -301,7 +301,7 @@ app.post("/flsearcher", (req, res) => {
   const { userid, wallid } = req.body;
   db.query(
     `select * friends_list where userid=? and friendid=?`,
-    [wallid,userid],
+    [userid,wallid],
     (err, result) => {
       console.log(err);
       return res.status(200).json({ message: "success", array: result });
