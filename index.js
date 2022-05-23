@@ -293,7 +293,7 @@ app.post("/friendrequestpage", (req, res) => {
   const { userid } = req.body
   db.query(
     `select friend_requests.requestid, friend_requests.userid as requestee, friend_requests.requestorid, 
-    friend_requests.date_created, register.userid,
+    friend_requests.date_created, register.userid, register.picpath,
     register.firstName, register.lastName,register.city from friend_requests 
         inner join register on friend_requests.requestorid=register.userid 
         where friend_requests.userid = ?`,
@@ -606,7 +606,7 @@ app.post("/flfeed", (req, res) => {
 
     db.query(`
     select friends_list.friendlistid, friends_list.userid, friends_list.friendid, register.firstName, register.lastName,
-    register.nickname, register.city, register.birthday
+    register.nickname, register.city, register.picpath, register.birthday
     from friends_list 
     inner join register on friends_list.friendid = register.userid
     where friends_list.userid=?`, [userid], (err, result) => {
