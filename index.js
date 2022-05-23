@@ -387,6 +387,17 @@ app.post("/addfriend", (req, res) => {
         .status(200)
         .json({ message: "successfully added comment", array: result });
     }
+  )
+  
+  db.query(
+    `insert into friends_list (friendid,userid) values (?,?)`,
+    [userid, friendid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
   );
 
   db.query(
