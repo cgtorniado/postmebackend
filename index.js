@@ -270,7 +270,7 @@ app.post("/friendrequest", (req, res) => {
 });
 
 app.post("/friendrequestpage", (req, res) => {
-  const { userid } = req.body;
+  const { userid } = req.body
   db.query(
     `select friend_requests.requestid, friend_requests.userid as requestee, friend_requests.requestorid, 
     friend_requests.date_created, register.userid,
@@ -279,11 +279,11 @@ app.post("/friendrequestpage", (req, res) => {
         where friend_requests.userid = ?`,
     [userid],
     (err, result) => {
-      console.log(err);
-      return res.status(200).json({ message: "success", array: result });
+      console.log(err)
+      return res.status(200).json({ message: "success", array: result })
     }
-  );
-});
+  )
+})
 
 app.post("/frsearcher", (req, res) => {
   const { userid, wallid } = req.body
