@@ -22,7 +22,6 @@ const db = mysql.createConnection({
   database: process.env.DATABASE,
 });
 
-//install pacakge env para secure ang db info
 
 app.use(express.json());
 app.use(
@@ -30,6 +29,24 @@ app.use(
     extended: true,
   })
 );
+
+// all multer related
+const storage = multer.diskStorage({
+  destination:  (req,file,callback)=> {
+      callback(null,path.join(__dirname,"../public/images"))
+  },
+  filename:(req,file,callback)=> {
+      callback(null,file.fieldname+"-"+Date.now()+path.extname(file.originalname))
+  }
+})
+
+const upload = multer({storage:storage})
+const imageupload = upload.fields([{name:"image"}])
+
+app.use("/public", express.static(
+  path.join(__dirname,"/public")
+))
+
 
 //ROUTES
 
@@ -48,12 +65,14 @@ app.post("/register", async (req, res) => {
   );
 });
 
-app.post("/registeraddtl", (req, res) => {
-  const { username, birthday, city } = req.body;
+app.post("/registeraddtl", imageupload,(req, res) => {
+  const { username, birthday, city,image } = req.body;
+  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
+    console.log(imagepath)
 
   db.query(
-    "update register set city = ? , birthday = ?  where username = ?",
-    [city, birthday, username],
+    "update register set city = ? , birthday = ?, picpath=?  where username = ?",
+    [city, birthday, imagepath, username],
     (err, result) => {
       if (err) {
         return console.log(err.message);
