@@ -168,15 +168,12 @@ app.post("/profile", (req, res) => {
   }
 });
 
-app.post("/newpost", imageupload, (req, res) => {
+app.post("/newpost", (req, res) => {
   const { userid, post } = req.body;
-  const image = req.files.image[0]
-  const imagepath = req.protocol+"://"+req.get("host")+"/public/images/"+image.filename
-  console.log(imagepath)
 
   db.query(
-    "insert into posts (userid,wallid,content,picpath) values (?,?,?,?)",
-    [userid, userid, post,imagepath],
+    "insert into posts (userid,wallid,content) values (?,?,?)",
+    [userid, userid, post],
     (err, result) => {
       if (err) {
         console.log(err.message);
