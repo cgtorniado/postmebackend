@@ -364,6 +364,32 @@ app.post("/addcomment", (req, res) => {
   );
 });
 
+app.post("/addfriend", (req, res) => {
+  const { friendid, userid } = req.body;
+  db.query(
+    `insert into friends_list (friendid,userid) values (?,?)`,
+    [friendid, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
+  );
+
+  db.query(
+    `delete from friend_requests where requestorid=? and userid=?`,
+    [friendid, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
+  );
+});
+
+
 app.post("/commentfeed", (req, res) => {
   const { postid } = req.body;
   db.query(
