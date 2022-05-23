@@ -404,30 +404,30 @@ app.post("/addfriend", (req, res) => {
     `delete from friend_requests where requestorid=? and userid=?`,
     [friendid, userid],
     (err, result) => {
-      console.log(err);
+      console.log(err)
       return res
         .status(200)
-        .json({ message: "successfully added comment", array: result });
+        .json({ message: "successfully added comment", array: result })
     }
-  );
-});
+  )
+})
 
 app.post("/deletefriend", (req, res) => {
-  const { friendid, userid } = req.body;
+  const { friendid, userid } = req.body
   db.query(`DELETE FROM friends_list WHERE friendid =? and userid=?`, [friendid, userid], (err, result) => {
     console.log(err)
-    return res.status(200).json({ message: "successfully deleted friend request", array: result});
-  });
+    return res.status(200).json({ message: "successfully deleted friend request", array: result})
+  })
 
   db.query(`DELETE FROM friends_list WHERE friendid =? and userid=?`, [userid,friendid], (err, result) => {
     console.log(err)
-    return res.status(200).json({ message: "successfully deleted friend request", array: result});
-  });
-});
+    return res.status(200).json({ message: "successfully deleted friend request", array: result})
+  })
+})
 
 
 app.post("/commentfeed", (req, res) => {
-  const { postid } = req.body;
+  const { postid } = req.body
   db.query(
     `select comments.commentid, comments.postid,comments.content,comments.date_created,
     register.firstName,register.lastName, register.userid as id from comments
