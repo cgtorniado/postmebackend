@@ -90,6 +90,22 @@ app.post("/registeraddtl",imageupload,(req, res) => {
     
     })
 
+
+    db.query(
+      "select * from register where username=?",
+      [username],
+      (err, result) => {
+        if (err) {
+          return console.log(err.message);
+        }
+  
+        return res
+          .status(200)
+          .json({ message: "update results", finalresult: result  })
+      
+      })
+  
+
      
     }
   )
