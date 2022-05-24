@@ -82,12 +82,7 @@ app.post("/registeraddtl",imageupload,(req, res) => {
     (err, result) => {
       if (err) {
         return console.log(err.message);
-      }
-
-      return res
-        .status(200)
-        .json({ message: "update results", result: result  })
-    
+      }  
     })
 
 
@@ -101,7 +96,7 @@ app.post("/registeraddtl",imageupload,(req, res) => {
   
         return res
           .status(200)
-          .json({ message: "update results", finalresult: result  })
+          .json({ message: "register result", result: result  })
       
       })
   
