@@ -671,6 +671,76 @@ app.post("/flfeed", (req, res) => {
   }
 });
 
+
+app.post("/deleteaccount", (req, res) => {
+  const { userid } = req.body;
+  db.query(
+    `DELETE FROM register WHERE userid =?`,
+    [userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted account", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM comments WHERE userid =?`,
+    [userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM friend_requests WHERE userid =?`,
+    [userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM friends_list WHERE userid =? or friendid=?`,
+    [userid,userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM notifications WHERE notifreceiverid =? or notifsenderid=?`,
+    [userid,userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM post_likes WHERE userid=?`,
+    [userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  db.query(
+    `DELETE FROM posts WHERE userid=? or wallid=?`,
+    [userid,userid],
+    (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted comments", result:result});
+    }
+  );
+
+  
+
+});
+
 app.listen(process.env.PORT || 5001, "0.0.0.0", () => {
   console.log("server started");
   db.connect((err) => {
