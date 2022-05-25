@@ -38,16 +38,44 @@ app.use(
 app.post("/register", async (req, res) => {
   const { username, password, firstName, lastName, email } = req.body;
   const hashPassword = await bcrypt.hash(password, 8);
+
   db.query(
-    "insert into register (firstName,lastName,username,email,password) values (?,?,?,?,?)",
-    [firstName, lastName, username, email, hashPassword],
-    (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "profile created", result: result });
+    "Select * from register Where email=? ", email, (err,result) => {
+        if(err) {
+            return console.log(err.message)
+        }
+
+        if(result.length > 0) {
+            return res.status(400).json({message:"e-mail is already in use"})
+        }
+
+        db.query(
+          "Select * from register Where username=? ", username, (err,result) => {
+              if(err) {
+                  return console.log(err.message)
+              }
+      
+              if(result.length > 0) {
+                  return res.status(400).json({message:"username is already in use"})
+              }
+
+              db.query(
+                "insert into register (firstName,lastName,username,email,password) values (?,?,?,?,?)",
+                [firstName, lastName, username, email, hashPassword],
+                (err, result) => {
+                  console.log(err);
+                  return res
+                    .status(200)
+                    .json({ message: "profile created", result: result });
+                }
+              );
+
+          }
+        )
     }
-  );
+)
+  
+
 });
 
 app.use("/public", express.static(
