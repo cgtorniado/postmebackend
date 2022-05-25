@@ -298,7 +298,7 @@ app.post("/postfeed", (req, res) => {
 app.post("/homepagefeed", (req, res) => {
   const { userid } = req.body;
 
-  db.query(`select * from friends_list where userid=? or friendid=?`,userid, (err,result)=> {
+  db.query(`select * from friends_list where userid=? or friendid=?`,[userid,userid], (err,result)=> {
     if(err) {
         return console.log(err.message)
     }
