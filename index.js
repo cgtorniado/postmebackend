@@ -46,7 +46,7 @@ app.post("/register", async (req, res) => {
         }
 
         if(result.length > 0) {
-            return res.status(400).json({message:"e-mail is already in use"})
+            return res.status(400).json({issue:"email",message:"e-mail is already in use"})
         }
 
         db.query(
@@ -56,7 +56,7 @@ app.post("/register", async (req, res) => {
               }
       
               if(result.length > 0) {
-                  return res.status(400).json({message:"username is already in use"})
+                  return res.status(400).json({issue:"username",message:"username is already in use"})
               }
 
               db.query(
