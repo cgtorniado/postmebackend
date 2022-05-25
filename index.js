@@ -369,6 +369,21 @@ app.post("/deletepost", (req, res) => {
     console.log(err);
     return res.status(200).json({ message: "successfully deleted post",array: result  });
   });
+
+  db.query(`DELETE FROM post_likes WHERE postid =?`, [postid], (err, result) => {
+    console.log(err);
+    return res.status(200).json({ message: "successfully deleted likes of this post",array: result  });
+  });
+
+  db.query(`DELETE FROM comments WHERE postid =?`, [postid], (err, result) => {
+    console.log(err);
+    return res.status(200).json({ message: "successfully deleted comments of this post",array: result  });
+  });
+
+  db.query(`DELETE FROM notifications WHERE othertypeid =?`, [postid], (err, result) => {
+    console.log(err);
+    return res.status(200).json({ message: "successfully deleted notifications of this post",array: result  });
+  });
 });
 
 app.post("/deleterequest", (req, res) => {
