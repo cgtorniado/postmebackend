@@ -76,6 +76,7 @@ app.post("/register", async (req, res) => {
 )
   
 
+
 });
 
 app.use("/public", express.static(
@@ -602,6 +603,44 @@ app.post("/addfriend", (req, res) => {
         .json({ message: "successfully added comment", array: result })
     }
   )
+
+  db.query(
+    `insert into friendslist_feed (friendid,userid) values (?,?)`,
+    [friendid, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
+  )
+  
+  db.query(
+    `insert into friendslist_feed (friendid,userid) values (?,?)`,
+    [userid, friendid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
+  );
+})
+
+app.post("/addselffeed", (req, res) => {
+  const { userid } = req.body;
+
+  db.query(
+    `insert into friendslist_feed (friendid,userid) values (?,?)`,
+    [userid, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully added comment", array: result });
+    }
+  )
+  
 })
 
 app.post("/deletefriend", (req, res) => {
@@ -612,6 +651,21 @@ app.post("/deletefriend", (req, res) => {
   })
 
   db.query(`DELETE FROM friends_list WHERE friendid =? and userid=?`, [userid,friendid], (err, result) => {
+    console.log(err)
+    return res.status(200).json({ message: "successfully deleted friend request", array: result})
+  })
+
+  db.query(`DELETE FROM friendslist_feed WHERE friendid =? and userid=?`, [friendid, userid], (err, result) => {
+    console.log(err)
+    return res.status(200).json({ message: "successfully deleted friend request", array: result})
+  })
+
+  db.query(`DELETE FROM friendslist_feed WHERE friendid =? and userid=?`, [userid,friendid], (err, result) => {
+    console.log(err)
+    return res.status(200).json({ message: "successfully deleted friend request", array: result})
+  })
+
+  db.query(`DELETE FROM friendslist_feed WHERE friendid =? and userid=?`, [userid,userid], (err, result) => {
     console.log(err)
     return res.status(200).json({ message: "successfully deleted friend request", array: result})
   })
