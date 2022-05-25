@@ -312,6 +312,10 @@ app.post("/homepagefeed", (req, res) => {
     inner join register registerWall on posts.wallid = registerWall.userid
      where posts.userid=?
      order by posts.postid desc`,userid,(err,result)=> {
+      if (err) {
+        console.log(err.message);
+      }
+
       return res.status(200).json({issue:"no friends",array:result})
      })
         
