@@ -297,25 +297,53 @@ app.post("/postfeed", (req, res) => {
 
 app.post("/homepagefeed", (req, res) => {
   const { userid } = req.body;
-  db.query(
-    `select friends_list.friendlistid, friends_list.friendid, posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
-    posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
-    registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from friends_list
-inner join posts on friends_list.friendid = posts.userid
-inner join register on posts.userid = register.userid 
-inner join register registerWall on posts.wallid = registerWall.userid
- where friends_list.userid=? or friends_list.friendid=?
- order by posts.postid desc`,
-    [userid,userid],
-    (err, result) => {
-      if (err) {
-        console.log(err.message);
-      }
 
-      console.log(result);
-      return res.status(200).json({ message: "posts successfully loaded", array: result });
+  db.query(`select * from friends_list where userid=? or friendid=?`,userid, (err,result)=> {
+    if(err) {
+        return console.log(err.message)
     }
-  );
+
+    if(result.length === 0) {
+
+        db.query(`select  posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
+        posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
+        registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from posts
+    inner join register on posts.userid = register.userid 
+    inner join register registerWall on posts.wallid = registerWall.userid
+     where posts.userid=?
+     order by posts.postid desc`,userid,(err,result)=> {
+      return res.status(200).json({issue:"no friends",array:result})
+     })
+        
+    }
+
+    else {
+
+      db.query(
+        `select friends_list.friendlistid, friends_list.friendid, posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
+        posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
+        registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from friends_list
+    inner join posts on friends_list.friendid = posts.userid
+    inner join register on posts.userid = register.userid 
+    inner join register registerWall on posts.wallid = registerWall.userid
+     where friends_list.userid=? or friends_list.friendid=?
+     order by posts.postid desc`,
+        [userid,userid],
+        (err, result) => {
+          if (err) {
+            console.log(err.message);
+          }
+    
+          console.log(result);
+          return res.status(200).json({ message: "posts successfully loaded", array: result });
+        }
+      );
+    }
+
+  })
+
+ 
+
 });
 
 app.post("/notiffeed", (req, res) => {
