@@ -325,14 +325,15 @@ app.post("/homepagefeed", (req, res) => {
     else {
 
       db.query(
-        `select friends_list.friendlistid, friends_list.friendid, posts.postid, posts.userid, posts.wallid, posts.content, posts.date_created, 
-        posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
-        registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from friends_list
-    inner join posts on friends_list.friendid = posts.userid
-    inner join register on posts.userid = register.userid 
-    inner join register registerWall on posts.wallid = registerWall.userid
-     where friends_list.userid=? or friends_list.friendid=?
-     order by posts.postid desc`,
+        ` select posts.postid, friendslist_feed.friendlistid, friendslist_feed.friendid, 
+        posts.userid, posts.wallid, posts.content, posts.date_created, 
+           posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
+           registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from friendslist_feed
+       inner join posts on friendslist_feed.friendid = posts.userid
+       inner join register on posts.userid = register.userid 
+       inner join register registerWall on posts.wallid = registerWall.userid
+        where friendslist_feed.userid=15
+        order by posts.postid desc`,
         [userid,userid],
         (err, result) => {
           if (err) {
