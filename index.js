@@ -503,6 +503,22 @@ app.post("/editemail" ,(req, res) => {
   );
 });
 
+app.post("/notifreset" ,(req, res) => {
+  const { userid } = req.body;
+
+
+  db.query(
+    `update notifications set new_comment='0' where userid=?`,
+    [email, userid],
+    (err, result) => {
+      console.log(err);
+      return res
+        .status(200)
+        .json({ message: "successfully edited", array: result });
+    }
+  );
+});
+
 app.post("/editusername" ,(req, res) => {
   const {
     username,
