@@ -509,7 +509,7 @@ app.post("/notifreset" ,(req, res) => {
 
   db.query(
     `update notifications set new_comment='0' where userid=?`,
-    [email, userid],
+    [userid],
     (err, result) => {
       console.log(err);
       return res
