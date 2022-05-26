@@ -642,6 +642,32 @@ app.post("/addfriend", (req, res) => {
         .json({ message: "successfully added comment", array: result });
     }
   );
+
+  db.query(
+    "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
+    ["friends", userid, friendid, userid, "1"],
+    (err, result) => {
+      if (err) {
+        console.log(err.message);
+      }
+
+      console.log(result);
+      return res.status(200).json({ message: "successfully added friend notif", array: result });
+    }
+  );
+
+  db.query(
+    "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
+    ["friends", friendid, userid, friendid, "1"],
+    (err, result) => {
+      if (err) {
+        console.log(err.message);
+      }
+
+      console.log(result);
+      return res.status(200).json({ message: "successfully added friend notif", array: result });
+    }
+  );
 })
 
 app.post("/addselffeed", (req, res) => {
