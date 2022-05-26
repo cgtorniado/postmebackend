@@ -385,7 +385,7 @@ app.post("/homepagefeed", (req, res) => {
 
 app.post("/notiffeed", (req, res) => {
   db.query(
-    `select notif.notifid, notif.notiftype, notif.notifereceiverid, notif.notifsenderid, notif.new_comment, notif.date_created,
+    `select notif.notifid, notif.notiftype, notif.notifreceiverid, notif.notifsenderid, notif.new_comment, notif.date_created,
     posts.postid, posts.userid, posts.wallid,postowner.firstName as whopostedFN, postowner.lastName as whopostedLN,
     wallowner.firstName as whosewallFN, wallowner.lastName as whosewallLN,postowner.picpath as ownerpicpath, wallowner.picpath as wallownerpicpath
         from notifications as notif
