@@ -393,7 +393,7 @@ app.post("/notiffeed", (req, res) => {
         inner join posts on notif.othertypeid = posts.postid
         inner join register as postowner on posts.userid = postowner.userid
         inner join register as wallowner on posts.wallid = wallowner.userid
-        inner join reegister as sendername on notif.notifsenderid = sendername.userid
+        inner join register as sendername on notif.notifsenderid = sendername.userid
         order by notif.date_created desc`,
     (err, result) => {
       if (err) {
