@@ -385,13 +385,15 @@ app.post("/homepagefeed", (req, res) => {
 
 app.post("/notiffeed", (req, res) => {
   db.query(
-    `select notif.notifid, notif.notiftype, notif.notifreceiverid, notif.notifsenderid, notif.new_comment, notif.date_created,
+    `select notif.notifid, notif.notiftype, notif.notifreceiverid, notif.notifsenderid, sendername.firstName as senderFN, sendername.lastName as senderLN
+    , notif.new_comment, notif.date_created,
     posts.postid, posts.userid, posts.wallid,postowner.firstName as whopostedFN, postowner.lastName as whopostedLN,
     wallowner.firstName as whosewallFN, wallowner.lastName as whosewallLN,postowner.picpath as ownerpicpath, wallowner.picpath as wallownerpicpath
         from notifications as notif
         inner join posts on notif.othertypeid = posts.postid
         inner join register as postowner on posts.userid = postowner.userid
         inner join register as wallowner on posts.wallid = wallowner.userid
+        inner join reegister as sendername on notif.notifsenderid = sendername.userid
         order by notif.date_created desc`,
     (err, result) => {
       if (err) {
