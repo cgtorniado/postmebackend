@@ -280,6 +280,31 @@ app.post("/newcommentnotif", (req, res) => {
     );
   });
 
+
+  app.post("/newlikenotif", (req, res) => {
+    const { userid,postid } = req.body;
+    db.query(
+      "insert into notifications (notiftype,othertypeid,notifreceiverid,notifsenderid,new_comment) values (?,?,?,?,?)",
+      ["like", postid, postid, userid, "1"],
+      (err, result) => {
+        if (err) {
+          console.log(err.message);
+        }
+  
+        console.log(result);
+        return res.status(200).json({ message: "successfully added  notif", array: result });
+      }
+    );
+  });
+
+  app.post("/deletelikenotif", (req, res) => {
+    const { postid,userid } = req.body;
+    db.query(`DELETE FROM notifications WHERE othertypeid =? and notifsenderid=? and notiftype=?`, [postid,userid,"like"], (err, result) => {
+      console.log(err);
+      return res.status(200).json({ message: "successfully deleted" });
+    });
+  });
+
 app.post("/postfeed", (req, res) => {
   const { userid } = req.body;
   db.query(
