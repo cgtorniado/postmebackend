@@ -12,9 +12,7 @@ const app = express();
 //initialize cors
 app.use(cors())
 
-app.options("*", (req, res) => {
-  res.status(200).send("Preflight request allowed");
-});
+app.options("*",cors());
 
 //connect db
 dotenv.config({ path: "./.env" });
