@@ -10,7 +10,9 @@ const multer = require("multer");
 const app = express();
 
 //initialize cors
-app.use(cors())
+app.use(cors({
+  origin: 'http://localhost:3000'
+}))
 
 //connect db
 dotenv.config({ path: "./.env" });
