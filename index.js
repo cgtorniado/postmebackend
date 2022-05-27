@@ -12,6 +12,10 @@ const app = express();
 //initialize cors
 app.use(cors())
 
+app.options("*", (req, res) => {
+  res.status(200).send("Preflight request allowed");
+});
+
 //connect db
 dotenv.config({ path: "./.env" });
 const db = mysql.createConnection({
@@ -636,7 +640,7 @@ app.post("/addcomment", (req, res) => {
   );
 });
 
-app.post("/addfriend",cors(), (req, res) => {
+app.post("/addfriend", (req, res) => {
   const { friendid, userid } = req.body;
   db.query(
     `insert into friends_list (friendid,userid) values (?,?)`,
