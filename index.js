@@ -10,9 +10,7 @@ const multer = require("multer");
 const app = express();
 
 //initialize cors
-app.use(cors({
-  origin: 'http://localhost:3000'
-}))
+app.use(cors())
 
 //connect db
 dotenv.config({ path: "./.env" });
@@ -638,7 +636,7 @@ app.post("/addcomment", (req, res) => {
   );
 });
 
-app.post("/addfriend", (req, res) => {
+app.post("/addfriend",cors(), (req, res) => {
   const { friendid, userid } = req.body;
   db.query(
     `insert into friends_list (friendid,userid) values (?,?)`,
