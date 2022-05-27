@@ -545,10 +545,26 @@ app.post("/notifreset" ,(req, res) => {
     and posts.wallid=?`,
     ["0",userid],
     (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "successfully edited", array: result });
+      if (err) {
+        console.log(err.message)
+      }
+
+      db.query(
+        `update notifications
+        inner join posts on notifications.othertypeid = posts.postid
+        inner join register on posts.userid = register.userid
+        set new_comment = ?
+        where (notifications.notiftype = 'friends' or notifications.notiftype='post')
+        and notifications.notifreceiverid=?`,
+        ["0",userid],
+        (err, result) => {
+          if (err) {
+            console.log(err.message)
+          }
+    
+          res.status(200).json({ message: "successfully edited", array: result });
+        }
+      );
     }
   );
 });
