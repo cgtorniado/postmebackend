@@ -537,7 +537,12 @@ app.post("/notifreset" ,(req, res) => {
 
 
   db.query(
-    `update notifications set new_comment=? where userid=?`,
+    `update notifications
+    inner join posts on notifications.othertypeid = posts.postid
+    inner join register on posts.userid = register.userid
+    set new_comment = ?
+    where (notifications.notiftype = 'like' or notifications.notiftype='comment')
+    and posts.wallid=?`,
     ["0",userid],
     (err, result) => {
       console.log(err);
