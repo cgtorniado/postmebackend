@@ -621,57 +621,72 @@ app.post("/addfriend", (req, res) => {
     `insert into friends_list (friendid,userid) values (?,?)`,
     [friendid, userid],
     (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "successfully added comment", array: result });
+      if(err) {
+        return console.log(err.message)
+      }
+
+      res.status(200).json({ message: "successfully added comment", array: result })
+
+      db.query(
+        `insert into friends_list (friendid,userid) values (?,?)`,
+        [userid, friendid],
+        (err, result) => {
+          if(err) {
+            return console.log(err.message)
+          }
+
+         res.status(200).json({ message: "successfully added comment", array: result })
+
+         db.query(
+          `delete from friend_requests where requestorid=? and userid=?`,
+          [friendid, userid],
+          (err, result) => {
+            if(err) {
+              return console.log(err.message)
+            }
+
+            res.status(200).json({ message: "successfully added comment", array: result })
+          }
+        )
+        })
+        }
+      );
     }
   )
   
-  db.query(
-    `insert into friends_list (friendid,userid) values (?,?)`,
-    [userid, friendid],
-    (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "successfully added comment", array: result });
-    }
-  );
+ 
 
-  db.query(
-    `delete from friend_requests where requestorid=? and userid=?`,
-    [friendid, userid],
-    (err, result) => {
-      console.log(err)
-      return res
-        .status(200)
-        .json({ message: "successfully added comment", array: result })
-    }
-  )
+app.post("/addfriendfeed", (req, res) => {
+  const { friendid, userid } = req.body;
 
   db.query(
     `insert into friendslist_feed (friendid,userid) values (?,?)`,
     [friendid, userid],
     (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "successfully added comment", array: result });
+      if(err) {
+        return console.log(err.message)
+      }
+
+     res.status(200).json({ message: "successfully added comment", array: result })
+
+     db.query(
+      `insert into friendslist_feed (friendid,userid) values (?,?)`,
+      [userid, friendid],
+      (err, result) => {
+      if(err) {
+          return console.log(err.message)
+       }
+  
+        return res
+          .status(200)
+          .json({ message: "successfully added comment", array: result });
+      }
+    )
     }
   )
   
-  db.query(
-    `insert into friendslist_feed (friendid,userid) values (?,?)`,
-    [userid, friendid],
-    (err, result) => {
-      console.log(err);
-      return res
-        .status(200)
-        .json({ message: "successfully added comment", array: result });
-    }
-  );
 })
+
 
 
 app.post("/addfriendnotif", (req, res) => {
