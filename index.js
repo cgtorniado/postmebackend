@@ -646,7 +646,6 @@ app.post("/addfriend", (req, res) => {
         return console.log(err.message)
       }
 
-      res.status(200).json({ message: "successfully added comment", array: result })
 
       db.query(
         `insert into friends_list (friendid,userid) values (?,?)`,
@@ -656,7 +655,6 @@ app.post("/addfriend", (req, res) => {
             return console.log(err.message)
           }
 
-         res.status(200).json({ message: "successfully added comment", array: result })
 
          db.query(
           `delete from friend_requests where requestorid=? and userid=?`,
@@ -671,7 +669,7 @@ app.post("/addfriend", (req, res) => {
         )
         })
         }
-      );
+      )
     }
   )
   
