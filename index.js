@@ -353,13 +353,14 @@ app.post("/homepagefeed", (req, res) => {
         ` select posts.postid, friendslist_feed.friendlistid, friendslist_feed.friendid, 
         posts.userid, posts.wallid, posts.content, posts.date_created, 
            posts.date_updated, register.firstName, register.lastName, register.username, register.picpath,
-           registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   from friendslist_feed
+           registerWall.firstName as wallOwnerFirstName, registerWall.lastName as wallOwnerLastName   
+       from friendslist_feed
        inner join posts on friendslist_feed.friendid = posts.userid
        inner join register on posts.userid = register.userid 
        inner join register registerWall on posts.wallid = registerWall.userid
-        where friendslist_feed.userid=15
+        where friendslist_feed.userid=?
         order by posts.postid desc`,
-        [userid,userid],
+        [userid],
         (err, result) => {
           if (err) {
             console.log(err.message);
